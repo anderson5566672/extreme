@@ -3,14 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Nexus Sensi – Interface Premium</title>
+  <title>EXTREME – Interface Monocromática</title>
   <style>
-    /* [Estilo Base Reset] */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Orbitron', sans-serif;
-      background-color: #0a0a0a;
-      color: #ff0000;
+      background-color: #000;
+      color: #fff;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -21,45 +20,45 @@
     }
     #particles-js {
       position: absolute;
-      top: 0;
-      left: 0;
       width: 100%;
       height: 100%;
+      top: 0;
+      left: 0;
       z-index: -1;
     }
     .menu {
-      background: rgba(20, 20, 20, 0.8);
+      background: #111;
       border-radius: 20px;
       padding: 30px;
       width: 360px;
-      box-shadow: 0 0 30px 5px rgba(255, 0, 0, 0.8);
+      box-shadow: 0 0 30px 5px rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(15px);
       text-align: center;
-      border: 2px solid #ff0000;
+      border: 2px solid #fff;
       position: relative;
     }
     .menu h2 {
       font-size: 2em;
       margin-bottom: 20px;
-      text-shadow: 0 0 20px #ff0000;
-      color: #ff5f5f;
+      text-shadow: 0 0 20px #fff;
+      color: #ddd;
       text-transform: uppercase;
       letter-spacing: 1px;
     }
-    .menu label {
+    .menu label, .menu .dropdown {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin: 15px 0;
       padding: 12px;
-      border-bottom: 2px solid rgba(255, 0, 0, 0.2);
+      border-bottom: 2px solid rgba(255, 255, 255, 0.2);
       border-radius: 12px;
-      background: rgba(30, 0, 0, 0.5);
+      background: rgba(255, 255, 255, 0.05);
       transition: all 0.3s ease;
     }
-    .menu label:hover {
-      background: rgba(255, 0, 0, 0.3);
-      box-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
+    .menu label:hover, .menu .dropdown:hover {
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
     }
     .switch {
       position: relative;
@@ -78,10 +77,10 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: rgba(255, 0, 0, 0.2);
+      background-color: rgba(255, 255, 255, 0.2);
       border-radius: 30px;
       transition: 0.4s;
-      border: 1px solid rgba(255, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.3);
     }
     .slider::before {
       content: "";
@@ -95,49 +94,38 @@
       transition: 0.4s;
     }
     input:checked + .slider {
-      background-color: #ff0000;
-      box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+      background-color: #555; /* Fundo cinza ao ativar */
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+      border: 2px solid #aaa;
     }
     input:checked + .slider::before {
       transform: translateX(27px);
+      background-color: #fff;
+      box-shadow: 0 0 5px #fff;
     }
-    .apply-btn {
-      margin-top: 25px;
-      padding: 15px;
+    select {
+      background: transparent;
+      color: #fff;
       border: none;
-      background: rgba(255, 0, 0, 0.3);
-      color: #ff0000;
-      border-radius: 12px;
-      cursor: pointer;
-      font-size: 1.2em;
-      transition: 0.3s;
+      font-size: 1em;
+      outline: none;
       width: 100%;
     }
-    .apply-btn:hover {
-      background: rgba(255, 0, 0, 0.6);
-      transform: scale(1.05);
-      box-shadow: 0 0 25px rgba(255, 0, 0, 1);
-    }
-    .code-box {
-      margin-top: 25px;
-      padding: 15px;
-      background: rgba(30, 0, 0, 0.4);
-      border-radius: 12px;
-      font-family: monospace;
-      color: #ff0000;
-      border: 1px solid rgba(255, 0, 0, 0.2);
+    option {
+      background: #000;
+      color: #fff;
     }
     .popup {
       position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background: rgba(20, 20, 20, 0.95);
+      background: #111;
       padding: 20px 30px;
       border-radius: 15px;
       display: none;
-      color: #ff0000;
-      box-shadow: 0 0 25px rgba(255, 0, 0, 1);
+      color: #fff;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
       font-size: 1.2em;
       text-align: center;
     }
@@ -154,167 +142,145 @@
       bottom: 20px;
       width: 100%;
       text-align: center;
-      color: #ff5f5f;
+      color: #aaa;
       font-size: 1.2em;
-      text-shadow: 0 0 15px #ff0000;
+      text-shadow: 0 0 15px #fff;
     }
     .footer a {
-      color: #ff0000;
+      color: #fff;
       text-decoration: none;
       font-weight: bold;
       transition: 0.3s;
     }
     .footer a:hover {
-      color: #ff5f5f;
-      text-shadow: 0 0 10px #ff0000;
+      color: #ccc;
+      text-shadow: 0 0 10px #fff;
     }
-
   </style>
 </head>
 <body>
-
 <div id="particles-js"></div>
-
 <div class="menu">
-  <h2>Nexus Sensi</h2>
+  <h2>EXTREME</h2>
 
   <label>
-    ⚡ Smooth Sensi
+    Auto Shot
     <div class="switch">
-      <input type="checkbox" id="smoothSensi" onchange="toggleOption('Smooth Sensitivity✅', this)">
+      <input type="checkbox" onchange="toggleOption('Auto Shot', this)" />
       <span class="slider"></span>
     </div>
   </label>
 
   <label>
-    ⚡ Boost Trick
+    Aimlock
     <div class="switch">
-      <input type="checkbox" id="noLag" onchange="toggleOption('Vip Mode💊', this)">
+      <input type="checkbox" onchange="toggleOption('Aimlock', this)" />
       <span class="slider"></span>
     </div>
   </label>
 
   <label>
-    ⚡ Smooth Drag
+    FOV 360
     <div class="switch">
-      <input type="checkbox" id="smoothDrag" onchange="toggleOption('Smooth Drag💀', this)">
+      <input type="checkbox" onchange="toggleOption('FOV 360', this)" />
+      <span class="slider"></span>
+    </div>
+  </label>
+
+  <div class="dropdown">
+    ⚡ Aimbot
+    <select onchange="toggleAimbot(this)">
+      <option value="">Selecionar...</option>
+      <option value="Cabeça">Cabeça</option>
+      <option value="Pescoço">Pescoço</option>
+      <option value="Peito">Peito</option>
+      <option value="Quadril">Quadril</option>
+    </select>
+  </div>
+
+  <label>
+    No Recoil
+    <div class="switch">
+      <input type="checkbox" onchange="toggleOption('No Recoil', this)" />
       <span class="slider"></span>
     </div>
   </label>
 
   <label>
-    ⚡ No Recoil
+    Antban
     <div class="switch">
-      <input type="checkbox" id="noRecoil" onchange="toggleOption('No Recoil🍓', this)">
+      <input type="checkbox" onchange="toggleOption('Antban', this)" />
       <span class="slider"></span>
     </div>
   </label>
-
-  <label>
-    ⚡ Aimlook
-    <div class="switch">
-      <input type="checkbox" id="aimlook" onchange="toggleOption('Aimlook👾', this)">
-      <span class="slider"></span>
-    </div>
-  </label>
-
-  <label>
-    ⚡ Antban
-    <div class="switch">
-      <input type="checkbox" id="antban" onchange="toggleOption('Antban🛡️', this)">
-      <span class="slider"></span>
-    </div>
-  </label>
-
-  <button class="apply-btn" onclick="applySettings()">Aplicar Sensi</button>
-  <div class="code-box" id="codeBox">Sensi Offset Values...👀</div>
 </div>
 
 <div class="popup" id="popupMessage">Mensagem</div>
 
-<!-- Rodapé com o link para o Instagram -->
 <div class="footer">
   Desenvolvido por <a href="https://www.instagram.com/nexus.sensix" target="_blank">@nexus.sensix</a>
 </div>
 
-<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 <script>
-  particlesJS("particles-js", {
-    particles: {
-      number: { value: 100, density: { enable: true, value_area: 800 } },
-      color: { value: "#ff0000" },
-      shape: {
-        type: "circle",
-        stroke: { width: 0, color: "#ff0000" },
-        polygon: { nb_sides: 5 },
-      },
-      opacity: {
-        value: 0.3,
-        random: true,
-        anim: { enable: true, speed: 1, opacity_min: 0, sync: false }
-      },
-      size: {
-        value: 3,
-        random: true,
-        anim: { enable: true, speed: 40, size_min: 0, sync: false }
-      },
-      line_linked: {
-        enable: true,
-        distance: 150,
-        color: "#ff0000",
-        opacity: 0.5,
-        width: 1
-      },
-      move: {
-        enable: true,
-        speed: 3,
-        direction: "none",
-        random: false,
-        straight: false,
-        out_mode: "out",
-        attract: { enable: false, rotateX: 600, rotateY: 600 }
-      }
-    },
-    interactivity: {
-      detect_on: "canvas",
-      events: {
-        onhover: { enable: true, mode: "repulse" },
-        onclick: { enable: true, mode: "push" }
-      },
-      modes: {
-        repulse: { distance: 100, duration: 0.4 },
-        push: { particles_nb: 4 }
-      }
-    },
-    retina_detect: true
-  });
-
   function toggleOption(optionName, checkbox) {
     const popup = document.getElementById('popupMessage');
-    popup.innerText = `Ativando ${optionName}...`;
+    const isChecked = checkbox && checkbox.checked;
+    popup.innerText = isChecked ? `Ativando ${optionName}...` : `Desativando ${optionName}...`;
     popup.classList.add('show');
 
     setTimeout(() => {
-      popup.innerText = `${optionName} ATIVADO ✅`;
+      popup.innerText = `${optionName} ${isChecked ? 'ATIVADO ✅' : 'DESATIVADO ❌'}`;
       setTimeout(() => {
         popup.classList.remove('show');
       }, 1000);
     }, 500);
   }
 
-  function applySettings() {
-    const codeBox = document.getElementById('codeBox');
-    const applyBtn = document.querySelector('.apply-btn');
-
-    codeBox.textContent = 'Aplicando Script...';
-    applyBtn.disabled = true;
-
-    setTimeout(() => {
-      codeBox.textContent = 'Sensi Applied ✅';
-      applyBtn.disabled = false;
-    }, 3000);
+  function toggleAimbot(select) {
+    const option = select.value;
+    if (!option) return;
+    toggleOption(`⚡ Aimbot: ${option}`, { checked: true });
   }
-</script>
 
+  particlesJS("particles-js", {
+    "particles": {
+      "number": { "value": 80 },
+      "color": { "value": "#ffffff" },
+      "shape": { "type": "circle" },
+      "opacity": { "value": 0.5 },
+      "size": { "value": 3 },
+      "line_linked": {
+        "enable": true,
+        "distance": 150,
+        "color": "#ffffff",
+        "opacity": 0.4,
+        "width": 1
+      },
+      "move": {
+        "enable": true,
+        "speed": 2,
+        "direction": "none",
+        "random": false,
+        "straight": false,
+        "out_mode": "out",
+        "bounce": false
+      }
+    },
+    "interactivity": {
+      "detect_on": "canvas",
+      "events": {
+        "onhover": { "enable": true, "mode": "repulse" },
+        "onclick": { "enable": true, "mode": "push" },
+        "resize": true
+      },
+      "modes": {
+        "repulse": { "distance": 100 },
+        "push": { "particles_nb": 4 }
+      }
+    },
+    "retina_detect": true
+  });
+</script>
 </body>
 </html>
