@@ -62,8 +62,8 @@
     }
     .switch {
       position: relative;
-      width: 55px;
-      height: 28px;
+      width: 60px;
+      height: 30px;
     }
     .switch input {
       opacity: 0;
@@ -87,33 +87,61 @@
       position: absolute;
       height: 24px;
       width: 24px;
-      left: 2px;
-      bottom: 2px;
+      left: 3px;
+      bottom: 3px;
       background-color: white;
       border-radius: 50%;
       transition: 0.4s;
     }
     input:checked + .slider {
-      background-color: #555; /* Fundo cinza ao ativar */
+      background-color: #555;
       box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
       border: 2px solid #aaa;
     }
     input:checked + .slider::before {
-      transform: translateX(27px);
+      transform: translateX(30px);
       background-color: #fff;
       box-shadow: 0 0 5px #fff;
     }
-    select {
-      background: transparent;
-      color: #fff;
-      border: none;
-      font-size: 1em;
-      outline: none;
-      width: 100%;
+    .aimbot-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 10px;
+      justify-content: center;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
     }
-    option {
-      background: #000;
+    .aimbot-options label {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 10px 20px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 1em;
+      font-weight: 600;
+      color: #ccc;
+      box-shadow: 0 0 5px rgba(255,255,255,0.1);
+    }
+    .aimbot-options label:hover {
+      background: rgba(255,255,255,0.15);
+      box-shadow: 0 0 10px rgba(255,255,255,0.3);
       color: #fff;
+    }
+    .aimbot-options input[type="radio"] {
+      display: none;
+    }
+    .aimbot-options input[type="radio"]:checked + label {
+      background-color: #555;
+      border-color: #aaa;
+      box-shadow: 0 0 15px #fff;
+      color: #fff;
+    }
+    .active-selection {
+      color: #fff;  /* Alterado para branco */
+      font-weight: bold;
     }
     .popup {
       position: fixed;
@@ -187,17 +215,6 @@
     </div>
   </label>
 
-  <div class="dropdown">
-    ⚡ Aimbot
-    <select onchange="toggleAimbot(this)">
-      <option value="">Selecionar...</option>
-      <option value="Cabeça">Cabeça</option>
-      <option value="Pescoço">Pescoço</option>
-      <option value="Peito">Peito</option>
-      <option value="Quadril">Quadril</option>
-    </select>
-  </div>
-
   <label>
     No Recoil
     <div class="switch">
@@ -213,6 +230,18 @@
       <span class="slider"></span>
     </div>
   </label>
+
+  <!-- Aimbot Moved to the Bottom -->
+  <div class="dropdown" onclick="toggleAimbotDropdown()">
+    ⚡ Aimbot
+    <div class="aimbot-options" id="aimbotOptions">
+      <!-- Apenas Cabeça e Pescoço -->
+      <label><input type="radio" name="aimbot" value="Cabeça" onchange="toggleAimbot(this)"> Cabeça</label>
+      <label><input type="radio" name="aimbot" value="Pescoço" onchange="toggleAimbot(this)"> Pescoço</label>
+    </div>
+  </div>
+
+  <div class="active-selection" id="aimbotSelection">Nenhuma opção de Aimbot ativada</div>
 </div>
 
 <div class="popup" id="popupMessage">Mensagem</div>
@@ -237,49 +266,56 @@
     }, 500);
   }
 
-  function toggleAimbot(select) {
-    const option = select.value;
-    if (!option) return;
-    toggleOption(`⚡ Aimbot: ${option}`, { checked: true });
+  function toggleAimbot(radio) {
+    const selectedOption = radio.value;
+    const selectionDisplay = document.getElementById('aimbotSelection');
+    const aimbotOptions = document.getElementById('aimbotOptions');
+
+    selectionDisplay.textContent = `Aimbot Ativado: ${selectedOption}`;
+    selectionDisplay.classList.add('active-selection');
+    aimbotOptions.style.maxHeight = '0';
+
+    const checkboxes = document.querySelectorAll('input[name="aimbot"]');
+    checkboxes.forEach((checkbox) => checkbox.checked = false);
+    radio.checked = true;
+  }
+
+  function toggleAimbotDropdown() {
+    const aimbotOptions = document.getElementById('aimbotOptions');
+    aimbotOptions.style.maxHeight = aimbotOptions.style.maxHeight ? '' : '200px';
   }
 
   particlesJS("particles-js", {
-    "particles": {
-      "number": { "value": 80 },
-      "color": { "value": "#ffffff" },
-      "shape": { "type": "circle" },
-      "opacity": { "value": 0.5 },
-      "size": { "value": 3 },
-      "line_linked": {
-        "enable": true,
-        "distance": 150,
-        "color": "#ffffff",
-        "opacity": 0.4,
-        "width": 1
+    particles: {
+      number: { value: 50 },
+      color: { value: "#fff" },
+      shape: {
+        type: "circle",
+        stroke: { width: 0, color: "#000" }
       },
-      "move": {
-        "enable": true,
-        "speed": 2,
-        "direction": "none",
-        "random": false,
-        "straight": false,
-        "out_mode": "out",
-        "bounce": false
+      opacity: {
+        value: 0.5,
+        random: true,
+        anim: { enable: true, speed: 1, opacity_min: 0.1 }
+      },
+      size: {
+        value: 5,
+        random: true,
+        anim: { enable: true, speed: 1, size_min: 0.1 }
+      },
+      line_linked: {
+        enable: true,
+        distance: 150,
+        color: "#fff",
+        opacity: 0.4,
+        width: 1
       }
     },
-    "interactivity": {
-      "detect_on": "canvas",
-      "events": {
-        "onhover": { "enable": true, "mode": "repulse" },
-        "onclick": { "enable": true, "mode": "push" },
-        "resize": true
-      },
-      "modes": {
-        "repulse": { "distance": 100 },
-        "push": { "particles_nb": 4 }
+    interactivity: {
+      events: {
+        onhover: { enable: true, mode: "repulse" }
       }
-    },
-    "retina_detect": true
+    }
   });
 </script>
 </body>
